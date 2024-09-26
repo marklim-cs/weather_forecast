@@ -8,8 +8,8 @@ import datetime
 def index(request):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
-    current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}"
-    forecast_url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&exclude=current,minutely,hourly,alerts&appid={}"
+    current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric"
+    forecast_url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&exclude=current,minutely,hourly,alerts&appid={}&units=metric"
 
     if request.method == "POST":
         city1 = request.POST['city1']
@@ -24,7 +24,7 @@ def fetch_weather_and_forecast(current_weather_url, forecast_url, api_key, city)
 
     weather_info = {
         "city": city, 
-        "temperature": round(response['main']['temp'] - 273.5, 2),
+        "temperature": round(response['main']['temp']),
         "description": response['weather'][0]['description'], 
-        "icon": response['weather']['icon'],
+        "icon": response['weather'][0]['icon'],
     }
