@@ -18,6 +18,13 @@ def index(request):
         return render(request, "index.html")
 
 def fetch_weather_and_forecast(current_weather_url, forecast_url, api_key, city):
-    response = request.get(current_weather_url.format(city, api_key)).json()
+    response = requests.get(current_weather_url.format(city, api_key)).json()
     lat, lon = response['coord']['lat'], response['coord']['lon']
     forecast = response.get(forecast_url.format(lat, lon, api_key)).json()
+
+    weather_info = {
+        "city": city, 
+        "temperature": round(response['main']['temp'] - 273.5, 2),
+        "description": response['weather'][0]['description'], 
+        "icon": response['weather']['icon'],
+    }
