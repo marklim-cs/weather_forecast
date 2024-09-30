@@ -1,0 +1,10 @@
+{% extends layout.html %}
+{% blockbody %}
+    <h1>Weather Forecast</h1>
+        <ul>
+            {% for d in daily_forecast1 %}
+                <li><a href="{% url 'index' %}">{{d.day}} {{d.description}} {{d.min_temp}} </a></li>
+            {% endfor %}
+        </ul>
+
+{% endblock %}
