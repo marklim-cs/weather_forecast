@@ -1,3 +1,5 @@
 from django.db import models
 
-# Create your models here.
+class Member(models.Model):
+  city1 = models.CharField(max_length=255)
+  city2 = models.CharField(max_length=255)

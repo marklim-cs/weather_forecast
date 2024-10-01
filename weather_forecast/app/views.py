@@ -1,17 +1,24 @@
 import requests
 import os
 from dotenv import load_dotenv
+from .utils import list_of_cities
 
 from django.shortcuts import render
 from django.template import loader
 import datetime
 
 def index(request):
+    cities = list_of_cities()
+    context = {
+        'cities': cities,
+    }
+    return render(request, 'app/index.html', context)
+
+def weather(request):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric"
     forecast_url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&exclude=current,minutely,hourly,alerts&appid={}&units=metric"
-    #template = loader.get_template('index.html')
 
     if request.method == "POST":
         city1 = request.POST['city1']
