@@ -1,20 +1,13 @@
 import requests
 import os
 from dotenv import load_dotenv
-from .utils import list_of_cities
 
 from django.shortcuts import render
 from django.template import loader
 import datetime
 
-def index(request):
-    cities = list_of_cities()
-    context = {
-        'cities': cities,
-    }
-    return render(request, 'app/index.html', context)
 
-def weather(request):
+def index(request):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric"
@@ -37,9 +30,9 @@ def weather(request):
             "daily_forecast2": daily_forecast2, 
         }
 
-        return render(request, "app/index.html", context)
+        return render(request, "index.html", context)
     else:
-        return render(request, "app/index.html")
+        return render(request, "index.html")
 
 def fetch_weather_and_forecast(city, api_key, forecast_url,current_weather_url):
     response = requests.get(current_weather_url.format(city, api_key)).json()

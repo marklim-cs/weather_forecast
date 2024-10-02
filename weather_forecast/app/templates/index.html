@@ -1,19 +1,23 @@
-{% extends layout.html %}
-{% blockbody %}
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body %}
     <h1>Weather Forecast</h1>
         <form method="post">
-            <select name="city">
-                <option disabled selected value="">Select City 1</option>
-                {% for city in cities %}
-                    <option value="{{ city }}">{{ city }}</option>
-                {% endfor %}
-                <option disabled selected value="">Select City 2</option>
-                {% for city in cities %}
-                    <option value="{{ city }}">{{ city }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit">Get the weather</button>
+            {% csrf_token %}
+            <div class="city_input_container">
+                <div class="city_input">
+                    <input type="text" id="city_input1" autofocus placeholder="Type a city..">
+                    <ul class="city_list1"></ul>
+                </div>
+                <div class="city_input">
+                    <input type="text" id="city_input2" autofocus placeholder="Type a city to compare">
+                    <ul class="city_list1"></ul>
+                </div>
+                <button type="submit">Get the weather</button>
+            </div>
         </form>
+    <script src="{% static 'js/city_search.js' %}"></script>
 
 {% endblock %}
 
