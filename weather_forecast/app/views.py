@@ -1,28 +1,21 @@
 import requests
 import os
 from dotenv import load_dotenv
-from .utils import list_of_cities
 
 from django.shortcuts import render
 from django.template import loader
 import datetime
 
-def index(request):
-    cities = list_of_cities()
-    context = {
-        'cities': cities,
-    }
-    return render(request, 'app/index.html', context)
 
-def weather(request):
+def index(request):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric"
-    forecast_url = "https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&exclude=current,minutely,hourly,alerts&appid={}&units=metric"
+    forecast_url = "https://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&exclude=current,minutely,hourly,alerts&appid={}&units=metric"
 
     if request.method == "POST":
         city1 = request.POST['city1']
-        city2 = request.get('city2', None)
+        city2 = request.POST.get('city2', None) #get() allows to provide a default value, works for optional fields
 
         weather_current1, daily_forecast1 = fetch_weather_and_forecast(city1, API_KEY, current_weather_url, forecast_url)
         if city2:
@@ -37,14 +30,14 @@ def weather(request):
             "daily_forecast2": daily_forecast2, 
         }
 
-        return render(request, "app/index.html", context)
+        return render(request, "index.html", context)
     else:
-        return render(request, "app/index.html")
+        return render(request, "index.html")
 
-def fetch_weather_and_forecast(city, api_key, forecast_url,current_weather_url):
+def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url):
     response = requests.get(current_weather_url.format(city, api_key)).json()
     lat, lon = response['coord']['lat'], response['coord']['lon']
-    forecast_response = response.get(forecast_url.format(lat, lon, api_key)).json()
+    forecast_response = requests.get(forecast_url.format(lat, lon, api_key)).json()
 
     weather_current = {
         "city": city, 
@@ -57,8 +50,8 @@ def fetch_weather_and_forecast(city, api_key, forecast_url,current_weather_url):
     for daily_data in forecast_response['list'][:5]:
         daily_forecast.append({
             "day": datetime.datetime.fromtimestamp(daily_data['dt']).strftime("%A"), 
-            "min_temp": round(daily_data['temp']['min']), 
-            "max_temp": round(daily_data['temp']['max']),
+            "min_temp": round(daily_data['main']['temp_min']), 
+            "max_temp": round(daily_data['main']['temp_max']),
             "description": daily_data['weather'][0]['description'],
             "icon": daily_data['weather'][0]['icon'],
         })
