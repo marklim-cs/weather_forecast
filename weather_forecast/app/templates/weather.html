@@ -3,11 +3,39 @@
 {% block body %}
     <div class="weather_output_container">
         <div class="current_weather">
-            <h1>Current Weather</h1>
+            <h1>Current Weather for {{ weather_current1.city }}</h1>
+            <div class="list">
+                <ul>
+                    <li>Temp.: {{ weather_current1.temperature }}</li>
+                    <li>Description: {{ weather_current1.description }}</li>
+                    <li>Icon: {{weather_current1.icon}}</li>
+                </ul>
+            </div>
         </div>
 
         <div class="weather_forecast">
             <h1>Weather Forecast</h1>
+            <div class="list">
+                <ul>
+                    {% for day in daily_forecast1 %}
+                        <li>Day: {{ daily_forecast1.day }}</li>
+                        <li>Min. Temp.: {{ daily_forecast1.min_temp }}</li>
+                        <li>Max. Temp.: {{ daily_forecast1.max_temp }}</li>
+                        <li>Description: {{ daily_forecast1.description }}</li>
+                        <li>Icon: {{ daily_forecast1.icon }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="current_weather">
+            <h1>Current Weather for {{ weather_current2.city }}</h1>
+            <div class="list">
+                <ul>
+                    <li>Temp.: {{ weather_current2.temperature }}</li>
+                    <li>Description: {{ weather_current2.description }}</li>
+                    <li>Icon: {{weather_current2.icon}}</li>
+                </ul>
+            </div>
         </div>
     </div>
 
