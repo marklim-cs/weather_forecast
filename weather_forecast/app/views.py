@@ -6,8 +6,10 @@ from django.shortcuts import render
 from django.template import loader
 import datetime
 
-
 def index(request):
+    return render(request, "index.html")
+
+def weather(request):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric"
@@ -30,9 +32,9 @@ def index(request):
             "daily_forecast2": daily_forecast2, 
         }
 
-        return render(request, "index.html", context)
+        return render(request, "weather.html", context)
     else:
-        return render(request, "index.html")
+        return render(request, "weather.html")
 
 def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url):
     response = requests.get(current_weather_url.format(city, api_key)).json()
