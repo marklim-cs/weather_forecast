@@ -6,7 +6,7 @@
             <h1>Current Weather for {{ weather_current1.city }}</h1>
             <div class="list">
                 <ul>
-                    <li>Temp.: {{ weather_current1.temperature }}</li>
+                    <li>Temp.: {{ weather_current1.temperature }} °C</li>
                     <li>Description: {{ weather_current1.description }}</li>
                     <img src="http://openweathermap.org/img/wn/{{ weather_current1.icon }}@2x.png" alt="Weather Icon">
                 </ul>
@@ -18,11 +18,12 @@
             <div class="list">
                 <ul>
                     {% for day in daily_forecast1 %}
-                        <li>Day: {{ daily_forecast1.day }}</li>
-                        <li>Min. Temp.: {{ daily_forecast1.min_temp }}</li>
-                        <li>Max. Temp.: {{ daily_forecast1.max_temp }}</li>
-                        <li>Description: {{ daily_forecast1.description }}</li>
-                        <li>Icon: {{ daily_forecast1.icon }}</li>
+                        <li>Day: {{ day.day }}</li>
+                        <li>Min. Temp.: {{ day.min_temp }} °C</li>
+                        <li>Max. Temp.: {{ day.max_temp }} °C</li>
+                        <li>Description: {{ day.description }}</li>
+                        <li>Icon: {{ day.icon }}</li>
+                        <img src="http://openweathermap.org/img/wn/{{ day.icon }}@2x.png" alt="Weather Icon">
                     {% endfor %}
                 </ul>
             </div>
@@ -31,9 +32,23 @@
             <h1>Current Weather for {{ weather_current2.city }}</h1>
             <div class="list">
                 <ul>
-                    <li>Temp.: {{ weather_current2.temperature }}</li>
+                    <li>Temp.: {{ weather_current2.temperature }} °C</li>
                     <li>Description: {{ weather_current2.description }}</li>
                     <img src="http://openweathermap.org/img/wn/{{ weather_current2.icon }}@2x.png" alt="Weather Icon">
+                </ul>
+            </div>
+        </div>
+        <div class="weather_forecast">
+            <h1>Weather Forecast</h1>
+            <div class="list">
+                <ul>
+                    {% for day in daily_forecast2 %}
+                        <li>Day: {{ day.day }}</li>
+                        <li>Min. Temp.: {{ day.min_temp }} °C</li>
+                        <li>Max. Temp.: {{ day.max_temp }} °C</li>
+                        <li>Description: {{ day.description }}</li>
+                        <img src="http://openweathermap.org/img/wn/{{ day.icon }}@2x.png" alt="Weather Icon">
+                    {% endfor %}
                 </ul>
             </div>
         </div>

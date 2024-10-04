@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+from collections import defaultdict
 
 from django.shortcuts import render
 from django.template import loader
@@ -13,7 +14,7 @@ def weather(request):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric"
-    forecast_url = "https://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&exclude=current,minutely,hourly,alerts&appid={}&units=metric"
+    forecast_url = "https://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&cnt=5&appid={}&units=metric"
 
     if request.method == "POST":
         city1 = request.POST['city1']
@@ -49,13 +50,50 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
     }
 
     daily_forecast = []
-    for daily_data in forecast_response['list'][:5]:
+    daily_data_grouped = defaultdict(list)
+
+    #group the data by day 
+    for daily_data in forecast_response['list'][1:10]:
+        day = datetime.datetime.fromtimestamp(daily_data['dt']).strftime("%A")
+        daily_data_grouped[day].append(daily_data)
+
+        print(daily_data_grouped)
+
+    #exctract min and max temp
+    for day, data_list in list(daily_data_grouped.items())[1:5]:
+        min_temp = min(data['main']['temp_min'] for data in data_list)
+        max_temp = max(data['main']['max_temp'] for data in data_list)
+
+        descriptions = (data['weather'][0]['description'] for data in data_list)
+        most_frequent_description = count_element_frequency(descriptions)
+
+        icons = (data['weather'][0]['icon'] for data in data_list)
+        most_frequent_icon = count_element_frequency(icons)
+
+
         daily_forecast.append({
-            "day": datetime.datetime.fromtimestamp(daily_data['dt']).strftime("%A"), 
-            "min_temp": round(daily_data['main']['temp_min']), 
-            "max_temp": round(daily_data['main']['temp_max']),
-            "description": daily_data['weather'][0]['description'],
-            "icon": daily_data['weather'][0]['icon'],
+            "day": day, 
+            "min_temp": min_temp, 
+            "max_temp": max_temp,
+            "description": most_frequent_description,
+            "icon": most_frequent_icon,
         })
 
+    print("Current Weather Data:", weather_current)
+    print("Daily Forecast Data:", daily_forecast)
+
     return weather_current, daily_forecast
+
+
+def count_element_frequency(array):
+    array = array
+    frequency_dict = {}
+
+    for element in array:
+        if element in frequency_dict:
+            frequency_dict[element] += 1
+        else:
+            frequency_dict[element] = 1
+
+    max_key = max(frequency_dict, key=frequency_dict.get)
+    return max_key
