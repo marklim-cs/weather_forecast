@@ -14,7 +14,7 @@ def weather(request):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     current_weather_url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric"
-    forecast_url = "https://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&cnt=5&appid={}&units=metric"
+    forecast_url = "https://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid={}&units=metric"
 
     if request.method == "POST":
         city1 = request.POST['city1']
@@ -49,27 +49,27 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
         "icon": response['weather'][0]['icon'],
     }
 
+
     daily_forecast = []
     daily_data_grouped = defaultdict(list)
 
     #group the data by day 
-    for daily_data in forecast_response['list'][1:10]:
+    for daily_data in forecast_response['list'][0:40]:
         day = datetime.datetime.fromtimestamp(daily_data['dt']).strftime("%A")
         daily_data_grouped[day].append(daily_data)
 
-        print(daily_data_grouped)
+    #print(daily_data_grouped)
 
     #exctract min and max temp
     for day, data_list in list(daily_data_grouped.items())[1:5]:
-        min_temp = min(data['main']['temp_min'] for data in data_list)
-        max_temp = max(data['main']['max_temp'] for data in data_list)
+        min_temp = round(min(data['main']['temp'] for data in data_list))
+        max_temp = round(max(data['main']['temp'] for data in data_list))
 
         descriptions = (data['weather'][0]['description'] for data in data_list)
         most_frequent_description = count_element_frequency(descriptions)
 
         icons = (data['weather'][0]['icon'] for data in data_list)
         most_frequent_icon = count_element_frequency(icons)
-
 
         daily_forecast.append({
             "day": day, 
@@ -78,9 +78,6 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
             "description": most_frequent_description,
             "icon": most_frequent_icon,
         })
-
-    print("Current Weather Data:", weather_current)
-    print("Daily Forecast Data:", daily_forecast)
 
     return weather_current, daily_forecast
 
