@@ -1,123 +1,128 @@
-/* General body styles */
 body {
-    background-color: lightblue; /* Light blue background */
-    font-family: Arial, sans-serif; /* Clean font */
+    background-color: lightblue; 
+    font-family: Arial, sans-serif; 
     margin: 0;
     padding: 0;
 }
 
-/* Container for the weather output */
 .weather_output_container {
-    max-width: 1200px; /* Increased max-width for two cities side by side */
-    margin: 20px auto; /* Center the container */
-    padding: 20px; /* Padding around the container */
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    max-width: 800px; 
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Flexbox to display two cities side by side */
 .weather_two_cities {
-    display: flex; /* Use flexbox */
-    justify-content: space-between; /* Space cities apart */
-    gap: 20px; /* Add space between two cities */
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-/* Weather data container for each city */
 .city_weather {
-    flex: 1; /* Each city takes up equal space */
-    background-color: rgba(255, 255, 255, 0.9); /* White background */
-    padding: 20px; /* Padding inside the city container */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Remove dots from list items */
-.city_weather ul {
-    list-style-type: none; /* Remove bullets */
-    padding: 0; /* Remove default padding */
+.weather_output_container ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.city_weather li {
-    margin-bottom: 5px; /* Add some space between list items */
+.weather_output_container li {
+    margin-bottom: 5px;
 }
 
-/* Headings */
 h1 {
-    color: #ff8c00; /* Dark orange color for main headings */
-    font-size: 24px; /* Size of the main headings */
-    text-align: center; /* Center align the main heading */
+    color: #ff8c00;
+    font-size: 24px;
+    text-align: center;
 }
 
 h2 {
-    color: #ff8c00; /* Dark orange color for subheadings */
-    font-size: 20px; /* Size of the day headings */
-    text-align: center; /* Center align the day headings */
+    color: #ff8c00;
+    font-size: 20px;
+    text-align: center;
 }
 
-/* Weather icon styles */
-.city_weather img {
-    width: 50px; /* Fixed width for icons */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Ensure icon is treated as a block element */
-    margin: 0 auto; /* Center the image */
-}
-
-/* Forecast day container inside each city */
 .forecast_days {
-    display: flex; /* Use flexbox for layout */
-    flex-wrap: wrap; /* Allow wrapping of forecast items */
-    justify-content: space-between; /* Space out items */
-    margin-top: 20px; /* Space above the forecast */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
 .forecast_day {
-    flex: 1 1 calc(45% - 10px); /* Responsive item width */
-    margin: 5px; /* Margin around each forecast day */
-    padding: 10px; /* Padding inside the day box */
-    background-color: #f9f9f9; /* Light grey background for day boxes */
-    border-radius: 6px; /* Rounded corners */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Light shadow */
-    text-align: center; /* Center the content */
+    flex: 1 1 calc(45% - 10px);
+    margin: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-/* Forecast day text styles */
 .forecast_day p,
 .forecast_day h2 {
-    margin: 5px 0; /* Margin for text elements */
+    margin: 5px 0;
 }
 
-/* Button styles */
+.forecast_day img {
+    width: 50px;
+    height: auto;
+}
+
+.input_container {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.input input {
+    width: 48%;
+    padding: 10px;
+    margin: 10px 1%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 .button {
-    text-align: center; /* Center the button */
+    text-align: center;
 }
 
 .button button {
-    padding: 10px 20px; /* Padding for button */
-    background-color: #ff8c00; /* Dark orange background */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer on hover */
-    transition: background-color 0.3s; /* Smooth transition */
+    padding: 10px 20px;
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .button button:hover {
-    background-color: #e07b00; /* Darker orange on hover */
+    background-color: #e07b00;
 }
 
-/* Back button styles */
 .weather_output_container button {
-    margin-top: 20px; /* Margin above the button */
-    padding: 10px 15px; /* Padding for the back button */
-    background-color: #ff8c00; /* Dark orange background for back button */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer on hover */
-    transition: background-color 0.3s; /* Smooth transition */
+    margin-top: 20px;
+    padding: 10px 15px;
+    background-color: #ff8c00;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .weather_output_container button:hover {
-    background-color: #e07b00; /* Darker orange on hover */
+    background-color: #e07b00;
 }
