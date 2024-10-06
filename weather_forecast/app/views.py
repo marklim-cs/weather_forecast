@@ -58,8 +58,6 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
         day = datetime.datetime.fromtimestamp(daily_data['dt']).strftime("%A")
         daily_data_grouped[day].append(daily_data)
 
-    #print(daily_data_grouped)
-
     #exctract min and max temp
     for day, data_list in list(daily_data_grouped.items())[1:5]:
         min_temp = round(min(data['main']['temp'] for data in data_list))
@@ -68,7 +66,10 @@ def fetch_weather_and_forecast(city, api_key, current_weather_url, forecast_url)
         descriptions = (data['weather'][0]['description'] for data in data_list)
         most_frequent_description = count_element_frequency(descriptions)
 
+        #print(str(descriptions))
+
         icons = (data['weather'][0]['icon'] for data in data_list)
+        #print(icons)
         most_frequent_icon = count_element_frequency(icons)
 
         daily_forecast.append({

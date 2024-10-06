@@ -28,6 +28,7 @@
                 </ul>
             </div>
         </div>
+        {% if daily_forecast2 %}
         <div class="current_weather">
             <h1>Current Weather for {{ weather_current2.city }}</h1>
             <div class="list">
@@ -52,6 +53,8 @@
                 </ul>
             </div>
         </div>
+        {% endif %}
+        <button onclick="window.history.back()">Back</button>
     </div>
 
 {% endblock %}
