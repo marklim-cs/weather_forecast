@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <h1>Weather Forecast</h1>
         <div class="input_container">
+            <h1>Weather Forecast</h1>
             <form method="post" action="{% url 'weather' %}">
                 {% csrf_token %}
                 <div class="input">
@@ -10,7 +10,7 @@
                     <input type="text" autofocus name="city2" placeholder="Type a city to compare">
                 </div>
                 <div class="button">
-                    <button type="submit">Get the weather</button>
+                    <button type="submit">Check weather</button>
                 </div>
             </form>
         </div>
